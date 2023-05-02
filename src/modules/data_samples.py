@@ -80,6 +80,7 @@ def get_genres_clean_processing(df_tmp):
     """
     Process all the commas and list values left after first processing of genres list.
     """
+    new_df2 = pd.DataFrame(columns=['book_id', 'genres'])
 #split all the comma values left after the first processing.
     for index, row in df_tmp.iterrows():
         genres_list = row['genres'].split(', ')

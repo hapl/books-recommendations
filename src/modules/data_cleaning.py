@@ -18,17 +18,24 @@ def data_cleaning_reviews(df):
     stop_words = set(stopwords.words('english'))
     punct = string.punctuation
     lemmatizer = nltk.WordNetLemmatizer()
+    #Remove punctuation 
+    def remove_punctuation(text):
+        return text.translate(punct)
     #Preprocess text
     def preprocess(text):
         # Remove any mathematical symbols or operators
         text = re.sub(r"[\^\/\*\+\-\=\(\)]", "", text)
+        text = re.sub(r"[^a-zA-Z\s,.]","", text)
         #Remove numbers
         text = re.sub(r"\d+", "", text)
+        text = text.lower()
         return text
+#    df1['review_text_clean'] = df1['review_text'].astype(str).apply(lambda x:[lemmatizer.lemmatize(word) 
+#                                                              for word in word_tokenize(preprocess(x)) 
+#                                                              if word.lower() not in stop_words and word.lower() not in punct])
     df1['review_text_clean'] = df1['review_text'].astype(str).apply(lambda x:[lemmatizer.lemmatize(word) 
-                                                              for word in word_tokenize(preprocess(x)) 
-                                                              if word.lower() not in stop_words and word.lower() not in punct])
- 
+                                                              for word in remove_punctuation(preprocess(x)).split() 
+                                                              if word not in stop_words]) 
     return df1
 
 def data_cleaning_books(df):
@@ -38,17 +45,24 @@ def data_cleaning_books(df):
     """
     df1 = df.copy()
     stop_words = set(stopwords.words('english'))
-    punct = string.punctuation
+    punct = str.maketrans('', '', string.punctuation) #string.punctuation
     lemmatizer = nltk.WordNetLemmatizer()
+    #Remove punctuation
+    def remove_punctuation(text):
+        return text.translate(punct)
     #Preprocess text
     def preprocess(text):
         # Remove any mathematical symbols or operators
         text = re.sub(r"[\^\/\*\+\-\=\(\)]", "", text)
+        text = re.sub(r"[^a-zA-Z\s,.]","", text)
         #Remove numbers
         text = re.sub(r"\d+", "", text)
+        text = text.lower()
         return text
+#    df1['description_text_clean'] = df1['description'].astype(str).apply(lambda x:[lemmatizer.lemmatize(word) 
+#                                                              for word in word_tokenize(preprocess(x)) 
+#                                                              if word.lower() not in stop_words and word.lower() not in punct])
     df1['description_text_clean'] = df1['description'].astype(str).apply(lambda x:[lemmatizer.lemmatize(word) 
-                                                              for word in word_tokenize(preprocess(x)) 
-                                                              if word.lower() not in stop_words and word.lower() not in punct])
- 
+                                                              for word in remove_punctuation(preprocess(x)).split() 
+                                                              if word not in stop_words])
     return df1
