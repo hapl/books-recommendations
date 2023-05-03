@@ -50,6 +50,7 @@ For more details go to the data cleaning [notebook](src/data_cleaning.ipynb).
 - Created a corpus based on the book description and book genres
 
 ![NLP](output/figures/NLP.png)
+
 For more details go to the feature engineering [notebook](src/feature_engineering_and_modeling_f.ipynb).
 
 **5. Methods used**
